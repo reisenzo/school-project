@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+	display: flex;
+    min-height: 100vh;
+    background: #121212;
+    width: 100%;
+    flex-direction: column;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: white;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid orange;  /* creates padding around scroll thumb */
+}
+
+
+.ring {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ring i {
+  position: absolute;
+  inset: 0;
+  border: 2px solid #fff;
+  transition: 0.5s;
+}
+.ring i:nth-child(1) {
+  animation: animate 6s linear infinite;
+}
+.ring i:nth-child(2) {
+  animation: animate 4s linear infinite;
+}
+.ring i:nth-child(3) {
+  animation: animate2 10s linear infinite;
+}
+.ring:hover i {
+  border: 6px solid var(--clr);
+  filter: drop-shadow(0 0 20px var(--clr));
+}
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes animate2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+header, #nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 70px;
+	width: 100%;
+		
+}
+
+#nav form{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+
+}
+
+.ui-linkbutton.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only, .ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only{
+	background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    margin: 0;
+    margin-right: 10px;
+    outline: 0 none;
+    border-radius: 4px;
+}
+.ui-linkbutton.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only > a{
+	text-decoration: none;
+}
+.ui-linkbutton.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only:hover,.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only:hover{
+ 	border-image: linear-gradient(to right, #FFE53B, #FF8900, #FF2525) 1;
+ 	filter: drop-shadow(0 0 20px #FF8900);
+}
+
+
+
+
+
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+    background: transparent;
+    color: #fff;
+ 	border-image: linear-gradient(to right, #FFE53B, #FF8900, #FF2525) 1;
+}
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only:hover{
+	filter: drop-shadow(0 0 20px #FF8900);
+	
+}
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix{
+	display: flex;
+    justify-content: space-around;
+}
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix > .ui-confirmdialog-yes {
+	text-decoration: none;
+	font-weight:bolder;
+	color: white;
+	padding: 10px;
+	background: black;
+	border: 1px solid transparent;
+	border-image: linear-gradient(to right, #FFE53B, #FF8900, #FF2525) 1; 
+}
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix > .ui-confirmdialog-yes:hover{
+	background: white;
+	color: black;
+	font-weight:bolder;
+} 
+
+
+
+
+main {
+display: flex;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+      font-family: "Quicksand", sans-serif;
+}
+h1{
+	font-size:34px;
+	background: -webkit-linear-gradient(#FFE53B, #FF8900, #FF2525);
+  	background-clip: text;
+  	-webkit-text-fill-color: transparent;
+}
+section{
+	height: 95vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+
+#conteudo {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1b1b1b;
+    min-height:230px;
+    width: 70vw;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 30px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.43);
+    flex-direction: column;
+    font-family: "Quicksand", sans-serif;  
+    border: 1px solid transparent;
+}
+#conteudo:hover {
+ 	filter: drop-shadow(0 0 20px #FF8900);
+}
+
+#conteudo > h2 {
+	padding-bottom: 20px;
+}
+#conteudo > p {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+footer {
+	display: flex;
+	align-items: center;
+	justify-content: center; 
+	background : #0b0b0b;
+	color: white;
+	padding: 10px;
+	height: 70px;
+	width: 100%;
+	box-shadow: 2px -8px 5px 0px rgba(0,0,0,0.43);
+}

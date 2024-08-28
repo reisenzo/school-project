@@ -1,0 +1,210 @@
+@charset "UTF-8";
+
+@import url('https://rsms.me/inter/inter-ui.css');
+
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	background: #121212;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Inter UI', sans-serif;
+}
+
+#Login {
+	background: linear-gradient(90deg, rgba(255, 229, 59, 1) 0%,
+		rgba(255, 137, 0, 1) 40%, rgba(255, 37, 37, 1) 100%);
+	height: 300px;
+	width: 350px;
+	color: black;
+	box-shadow: inset 0px 0px 25px 0px rgba(0, 0, 0, 0.75);
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+	z-index: 2;
+}
+
+h1 {
+	font-size: 50px;	
+	font-weight: 900;
+	margin: 50px 40px 40px;
+}
+
+p {
+	font-size: 14px;
+	line-height: 1.5;
+	margin: 40px;
+}
+
+#form {
+	z-index: 2;
+	display: flex;
+	min-height: 40vh;
+	background: #121212;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.75);
+	width: auto;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	
+}
+#conteiner {
+	display: flex;
+	height: 300px;
+	width: 350px;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.data {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all,
+	.ui-password.ui-inputfield.ui-widget.ui-state-default.ui-corner-all {
+	color: rgba(255, 255, 255, .87);
+	background: #121212;
+	padding: 1rem 1rem;
+	border: 1px solid #383838;
+	outline: 0 none;
+	font-size: 1.1rem;
+	border-radius: 1px;
+	transition: background-color .2s, color .2s, border-color .2s,
+		box-shadow .2s, opacity .2s;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+#button {
+	display: flex;
+	height: 78px;
+	align-items: center;
+	padding-bottom: 20px;	
+}
+
+input[type="submit" i] {
+    align-items: flex-start;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: buttontext;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid #383838;
+}
+
+
+
+
+
+
+
+
+.ring {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  
+}
+.ring i {
+  position: fixed;
+  inset: 0;
+  border: 2px solid #fff;
+  transition: 0.5s;
+  z-index: 1;
+  
+}
+.ring i:nth-child(1) {
+  animation: animate 6s linear infinite;
+}
+.ring i:nth-child(2) {
+  animation: animate 4s linear infinite;
+}
+.ring i:nth-child(3) {
+  animation: animate2 10s linear infinite;
+}
+.ring:hover i {
+  border: 6px solid var(--clr);
+  filter: drop-shadow(0 0 20px var(--clr));
+}
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes animate2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+    background: transparent;
+    color: #fff;
+ 	border:1px solid #383838;
+ 		box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+ 	
+}
+
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix{
+	display: flex;
+    justify-content: space-around;
+}
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix > .ui-confirmdialog-yes {
+	text-decoration: none;
+	font-weight:bolder;
+	color: white;
+	padding: 10px;
+	background: black;
+	border: 1px solid transparent;
+	border-image: linear-gradient(to right, #FFE53B, #FF8900, #FF2525) 1; 
+}
+.ui-dialog-buttonpane.ui-dialog-footer.ui-widget-content.ui-helper-clearfix > .ui-confirmdialog-yes:hover{
+	background: white;
+	color: black;
+	font-weight:bolder;
+} 
+
+
+
+

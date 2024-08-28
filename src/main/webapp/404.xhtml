@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view locale="#{localeMB.currentLocale}">
+
+	<h:head>
+		<meta charset="UTF-8" />
+		<title>#{msg.title404}</title>
+		<h:outputStylesheet library="school" name="estilo404.css"></h:outputStylesheet>
+
+	</h:head>
+
+	<h:body>
+		<div title="404">404</div>
+		<h2>#{msg.PageNotFound}</h2>
+		<h:link id="button" value="#{msg.loginPage}" outcome="Login.xhtml" />
+	</h:body>
+	
+	
+</f:view>
+
+</html>

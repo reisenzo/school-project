@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view locale="#{localeMB.currentLocale}">
+<h:head>
+
+	<meta charset="UTF-8" />
+	<title>#{msg.titlePageIndex}</title>
+
+		<h:outputStylesheet library="school" name="estiloIndex.css"></h:outputStylesheet>
+
+	</h:head>
+
+<h:body>
+	<header>
+		<nav id="nav">
+			<h:form>
+				<p:linkButton value="#{msg.homeButton}" outcome="Index"
+					Class="navButton" />
+					
+				<p:linkButton value="#{msg.teacherButton}"
+					outcome="GestaoProfessores" Class="navButton"
+					rendered="#{sessionScope.tipoUsuario == 'professor' || sessionScope.tipoUsuario == 'admin'}" />
+					
+				<p:linkButton value="#{msg.studentButton}" outcome="GestaoAlunos"
+					Class="navButton"
+					rendered="#{sessionScope.tipoUsuario == 'aluno' || sessionScope.tipoUsuario == 'admin'}" />
+					
+				<p:linkButton value="#{msg.courseButton}" outcome="GestaoCursos"
+					Class="navButton" />
+					
+				<p:commandButton Class="navButton" value="#{msg.logoutButton}"
+					action="#{loginBean.logout}" />
+					
+				<p:commandButton icon="pi pi-language"
+					 Class="navButton"
+					title="#{msg.LanguageButtonTitle}">
+					<p:confirm header="#{msg.languageButton}"
+						message="#{msg.languageButtonMessage}" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+					responsive="true" width="350">
+					<h:commandLink value="#{msg.languageButtonConfirmEnglish}"
+						type="button" actionListener="#{localeMB.englishLocale()}"
+						styleClass="ui-confirmdialog-yes" />
+					<h:commandLink value="#{msg.languageButtonConfirmPortuguese}"
+						type="button" actionListener="#{localeMB.portugueseLocale()}"
+						styleClass="ui-confirmdialog-yes" />
+				</p:confirmDialog>
+
+
+
+			</h:form>
+		</nav>
+	</header>
+	<main id="home">
+		<section>
+			<div class="ring">
+				<i style="--clr: #FFE53B;"></i> <i style="--clr: #FF8900;"></i> <i
+					style="--clr: #FF2525;"></i>
+				<h1>#{msg.titleIndex}</h1>
+			</div>
+		</section>
+		<div id="conteudo">
+			<h2>#{msg.aboutUsIndex}</h2>
+			<p>#{msg.aboutUsParagraph}</p>
+		</div>
+	</main>
+	<footer>
+		<p>#{msg.footerIndex}</p>
+	</footer>
+</h:body>
+	</f:view>
+</html>

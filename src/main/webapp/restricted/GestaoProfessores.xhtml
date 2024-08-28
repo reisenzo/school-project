@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<f:view locale="#{localeMB.currentLocale}">
+		<h:head>
+			<meta charset="UTF-8" />
+			<title>#{msg.titlePageTeacher}</title>
+			<h:outputStylesheet library="school" name="estilo.css"></h:outputStylesheet>
+
+			<f:metadata>
+				<f:viewAction action="#{gestaoProfessoresBean.todosProfessores}"></f:viewAction>
+			</f:metadata>
+		</h:head>
+
+		<h:body>
+			<header>
+				<nav id="nav">
+					<h:form>
+						<p:linkButton value="#{msg.homeButton}" outcome="Index"
+							Class="navButton" />
+						<p:linkButton value="#{msg.teacherButton}"
+							outcome="GestaoProfessores" Class="navButton"
+							rendered="#{sessionScope.tipoUsuario == 'professor' || sessionScope.tipoUsuario == 'admin'}" />
+						<p:linkButton value="#{msg.studentButton}" outcome="GestaoAlunos"
+							Class="navButton"
+							rendered="#{sessionScope.tipoUsuario == 'aluno' || sessionScope.tipoUsuario == 'admin'}" />
+						<p:linkButton value="#{msg.courseButton}" outcome="GestaoCursos"
+							Class="navButton" />
+
+
+						<p:commandButton icon="pi pi-language"
+							styleClass="rounded-button ui-button-secondary "
+							Class="navButton" title="#{msg.LanguageButtonTitle}"
+							onclick="PF('languageConfirmDialog').show()">
+						</p:commandButton>
+
+						<p:confirmDialog header="#{msg.languageButton}"
+							message="#{msg.languageButtonMessage}"
+							widgetVar="languageConfirmDialog" showEffect="fade"
+							hideEffect="fade" responsive="true" width="350">
+							<h:commandLink value="#{msg.languageButtonConfirmEnglish}"
+								type="button" actionListener="#{localeMB.englishLocale()}"
+								styleClass="ui-confirmdialog-yes" />
+							<h:commandLink value="#{msg.languageButtonConfirmPortuguese}"
+								type="button" actionListener="#{localeMB.portugueseLocale()}"
+								styleClass="ui-confirmdialog-yes" />
+						</p:confirmDialog>
+
+
+
+					</h:form>
+				</nav>
+			</header>
+
+			<h2>#{msg.titleTeacher}</h2>
+
+			<div id="conteudo">
+				<h:form id="frm">
+					<p:confirmDialog id="actionConfirmDialog" global="true">
+						<p:commandButton value="#{msg.confirmDialogNo}" type="button"
+							styleClass="ui-confirmdialog-no ui-button-flat" />
+						<p:commandButton value="#{msg.confirmDialogYes}" type="button"
+							styleClass="ui-confirmdialog-yes"
+							onclick='setTimeout(function() { swal({title:"#{msg.deleteMessageAlert}"}); }, 700);' />
+					</p:confirmDialog>
+					<p:messages id="messages" />
+					<!-- +++++++++++++++++++TOOLBAR+++++++++++++++++++ -->
+					<p:toolbar id="toolbar">
+						<f:facet name="left">
+							<p:inputText id="termoPesquisa"
+								placeholder="#{msg.toolbarSearchPlaceholder}" size="30"
+								value="#{gestaoProfessoresBean.termoPesquisa}" />
+							<p:commandButton icon="pi pi-search"
+								styleClass="ui-button-outlined"
+								actionListener="#{gestaoProfessoresBean.pesquisar}"
+								update="profDataTable messages" process="@this termoPesquisa" />
+							<p:spacer width="10px" />
+						</f:facet>
+						<f:facet name="right">
+							<p:commandButton value="#{msg.toolbarNewButton}"
+								styleClass="ui-button-outlined"
+								actionListener="#{gestaoProfessoresBean.prepararNovoProfessor}"
+								oncomplete="PF('professorDialogWidgetVar').show()"
+								update="professorDialog" process="@this">
+								<p:resetInput target="professorDialog"></p:resetInput>
+							</p:commandButton>
+							<p:spacer width="10px" />
+							<p:commandButton value="#{msg.toolbarDeleteButton}"
+								styleClass="ui-button-outlined ui-button-danger"
+								disabled="#{not gestaoProfessoresBean.professorSelecionado}"
+								actionListener="#{gestaoProfessoresBean.excluir}"
+								update="messages profDataTable toolbar" process="@this">
+
+								<p:confirm header="#{msg.confirmDialogHeader}"
+									message="#{msg.confirmDialogMessage}"
+									icon="pi pi-exclamation-triangle"></p:confirm>
+
+							</p:commandButton>
+							<p:spacer width="10px" />
+							<p:commandButton value="#{msg.toolbarEditButton}"
+								styleClass="ui-button-outlined ui-button-warning"
+								disabled="#{not gestaoProfessoresBean.professorSelecionado}"
+								actionListener="#{gestaoProfessoresBean.prepararEdicao}"
+								oncomplete="PF('professorDialogWidgetVar').show()"
+								update="professorDialog" process="@this">
+								<p:resetInput target="professorDialog"></p:resetInput>
+							</p:commandButton>
+						</f:facet>
+					</p:toolbar>
+					<p:dataTable id="profDataTable"
+						value="#{gestaoProfessoresBean.listaProfessores}" var="professor"
+						emptyMessage="#{msg.Empty}" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords}"
+						rowsPerPageTemplate="3,10,{ShowAll|'All'}" selectionMode="single"
+						selection="#{gestaoProfessoresBean.professor}"
+						rowKey="#{professor.id}">
+
+						<p:ajax event="rowSelect" update="frm:toolbar"></p:ajax>
+
+						<p:ajax event="rowUnselect" update="frm:toolbar"></p:ajax>
+
+						<p:column headerText="#{msg.Name}" sortBy="#{professor.nome}">
+							<h:outputText value="#{professor.nome}" />
+						</p:column>
+
+						<p:column headerText="CPF" sortBy="#{professor.cpf}">
+							<h:outputText value="#{professor.cpf}" />
+						</p:column>
+
+						<p:column headerText="#{msg.Class}" sortBy="#{professor.tipo}">
+							<h:outputText value="#{professor.tipo}" />
+						</p:column>
+
+						<p:column headerText="#{msg.Course}"
+							sortBy="#{professor.curso.descricao}">
+							<h:outputText value="#{professor.curso.descricao}" />
+						</p:column>
+					</p:dataTable>
+
+					<!-- +++++++++++++++++++CAIXA DE DIALOGO+++++++++++++++++++ -->
+					<p:dialog id="professorDialog" header="#{msg.dialogNewTeacher}"
+						widgetVar="professorDialogWidgetVar" modal="true"
+						resizable="false" closeOnEscape="true">
+						<p:messages id="professorMessages" />
+						<p:defaultCommand target="salvarCommandButton"
+							scope="professorDialog" />
+						<h:panelGrid columns="2" id="professorPanelGrid"
+							rendered="#{gestaoProfessoresBean.professor ne null}">
+							<p:outputLabel for="nome" value="#{msg.Name}: " />
+							<p:inputText id="nome" size="80" maxlength="80"
+								value="#{gestaoProfessoresBean.professor.nome}" />
+
+							<p:outputLabel for="cpf" value="CPF: " />
+							<p:inputMask id="cpf" mask="999.999.999-99" size="13"
+								maxlength="14" value="#{gestaoProfessoresBean.professor.cpf}" />
+
+							<p:outputLabel value="#{msg.Class}: " for="tipo" />
+							<p:selectOneMenu id="tipo"
+								value="#{gestaoProfessoresBean.professor.tipo}">
+								<f:selectItem itemLabel="#{msg.Select}" />
+								<f:selectItems value="#{gestaoProfessoresBean.tiposCurso}"
+									var="tipoCurso" itemLabel="#{tipoCurso.descricao}"
+									itemValue="#{tipoCurso}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{msg.EntryDate}:" for="dataEntrada" />
+							<p:calendar id="dataEntrada" pattern="dd/MM/yyyy" size="30"
+								value="#{gestaoProfessoresBean.professor.dataEntrada}" />
+
+							<p:outputLabel value="#{msg.Course} " for="curso" />
+							<p:autoComplete id="curso" size="80"
+								value="#{gestaoProfessoresBean.professor.curso}"
+								completeMethod="#{gestaoProfessoresBean.completarCurso}"
+								converter="#{gestaoProfessoresBean.cursoConverter}" var="curso"
+								itemLabel="#{curso.descricao}" itemValue="#{curso}"
+								scrollHeight="250" dropdown="true" />
+
+							<h:outputLabel />
+							<p:commandButton id="salvarCommandButton" value="#{msg.Save}"
+								actionListener="#{gestaoProfessoresBean.salvar}"
+								update="professorPanelGrid professorMessages"
+								oncomplete="if(!args.validationFailed) PF('professorDialogWidgetVar').hide()"
+								process="professorDialog" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+			</div>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+				
+			</script>
+		</h:body>
+	</f:view>
+</ui:composition>

@@ -1,0 +1,198 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<f:view locale="#{localeMB.currentLocale}">
+		<h:head>
+			<meta charset="UTF-8" />
+			<title>#{msg.titlePageStudent}</title>
+			<h:outputStylesheet library="school" name="estilo.css"></h:outputStylesheet>
+
+			<f:metadata>
+				<f:viewAction action="#{gestaoAlunosBean.todosAlunos}"></f:viewAction>
+			</f:metadata>
+
+		</h:head>
+
+		<h:body>
+			<header>
+				<nav id="nav">
+					<h:form>
+						<p:linkButton value="#{msg.homeButton}" outcome="Index"
+							Class="navButton" />
+						<p:linkButton value="#{msg.teacherButton}"
+							outcome="GestaoProfessores" Class="navButton"
+							rendered="#{sessionScope.tipoUsuario == 'professor' || sessionScope.tipoUsuario == 'admin'}" />
+						<p:linkButton value="#{msg.studentButton}" outcome="GestaoAlunos"
+							Class="navButton"
+							rendered="#{sessionScope.tipoUsuario == 'aluno' || sessionScope.tipoUsuario == 'admin'}" />
+						<p:linkButton value="#{msg.courseButton}" outcome="GestaoCursos"
+							Class="navButton" />
+
+
+						<p:commandButton icon="pi pi-language"
+							styleClass="rounded-button ui-button-secondary "
+							Class="navButton" title="#{msg.LanguageButtonTitle}"
+							onclick="PF('languageConfirmDialog').show()">
+						</p:commandButton>
+
+						<p:confirmDialog header="#{msg.languageButton}"
+							message="#{msg.languageButtonMessage}"
+							widgetVar="languageConfirmDialog" showEffect="fade"
+							hideEffect="fade" responsive="true" width="350">
+							<h:commandLink value="#{msg.languageButtonConfirmEnglish}"
+								type="button" actionListener="#{localeMB.englishLocale()}"
+								styleClass="ui-confirmdialog-yes" />
+							<h:commandLink value="#{msg.languageButtonConfirmPortuguese}"
+								type="button" actionListener="#{localeMB.portugueseLocale()}"
+								styleClass="ui-confirmdialog-yes" />
+						</p:confirmDialog>
+					</h:form>
+				</nav>
+			</header>
+
+			<h2>#{msg.titleStudent}</h2>
+
+			<div id="conteudo">
+
+				<h:form id="frm">
+					<p:confirmDialog id="actionConfirmDialog" global="true">
+						<p:commandButton value="#{msg.confirmDialogNo}" type="button"
+							styleClass="ui-confirmdialog-no ui-button-flat" />
+						<p:commandButton value="#{msg.confirmDialogYes}" type="button"
+							styleClass="ui-confirmdialog-yes"
+							onclick='setTimeout(function() { swal({title:"#{msg.deleteMessageAlert}"}); }, 700);' />
+					</p:confirmDialog>
+					<p:messages id="messages" />
+					<!-- TOOLBAR TOOLBAR TOOLBAR TOOLBAR TOOLBAR TOOLBAR TOOLBAR TOOLBAR TOOLBAR-->
+
+					<p:toolbar id="toolbar">
+						<f:facet name="left">
+
+							<p:inputText id="termoPesquisa"
+								placeholder="#{msg.toolbarSearchPlaceholder}" size="30"
+								value="#{gestaoAlunosBean.termoPesquisa}" process="@this" />
+							<p:commandButton icon="pi pi-search"
+								styleClass="ui-button-outlined"
+								actionListener="#{gestaoAlunosBean.pesquisar}"
+								update="alunosDataTable messages" process="@this termoPesquisa" />
+							<p:spacer width="10px" />
+						</f:facet>
+
+						<f:facet name="right">
+							<p:commandButton value="#{msg.toolbarNewButton}"
+								styleClass="ui-button-outlined"
+								actionListener="#{gestaoAlunosBean.preparaNovoAluno}"
+								oncomplete="PF('alunoDialogWidgetVar').show()"
+								update="alunoDialog" process="@this">
+								<p:resetInput target="alunoDialog" />
+							</p:commandButton>
+							<p:spacer width="10px" />
+
+
+							<p:commandButton value="#{msg.toolbarDeleteButton}"
+								styleClass="ui-button-outlined ui-button-danger"
+								disabled="#{not gestaoAlunosBean.alunoSelecionado}"
+								actionListener="#{gestaoAlunosBean.excluir}"
+								update="messages alunosDataTable toolbar" process="@this">
+								<p:confirm header="#{msg.confirmDialogHeader}"
+									message="#{msg.confirmDialogMessage}"
+									icon="pi pi-exclamation-triangle"></p:confirm>
+							</p:commandButton>
+							<p:spacer width="10px" />
+
+
+							<p:commandButton value="#{msg.toolbarEditButton}"
+								styleClass="ui-button-outlined ui-button-warning"
+								disabled="#{not gestaoAlunosBean.alunoSelecionado}"
+								actionListener="#{gestaoAlunosBean.preparaEdicao}"
+								oncomplete="PF('alunoDialogWidgetVar').show()"
+								update="alunoDialog" process="@this">
+								<p:resetInput target="alunoDialog" />
+							</p:commandButton>
+						</f:facet>
+
+					</p:toolbar>
+
+					<!-- DATATABLE DATATABLE DATATABLE DATATABLE DATATABLE DATATABLE DATATABLE -->
+					<p:dataTable id="alunosDataTable"
+						value="#{gestaoAlunosBean.listaAlunos}" var="aluno"
+						emptyMessage="#{msg.Empty}" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords}"
+						rowsPerPageTemplate="3,10,{ShowAll|'All'}" selectionMode="single"
+						selection="#{gestaoAlunosBean.aluno}" rowKey="#{aluno.id}">
+						<p:ajax event="rowSelect" update="frm:toolbar" />
+						<p:ajax event="rowUnselect" update="frm:toolbar" />
+						<!-- ================================================ -->
+						<p:column headerText="#{msg.Name}" sortBy="#{aluno.nome}">
+							<h:outputText value="#{aluno.nome}" />
+						</p:column>
+
+						<p:column headerText="#{msg.Class}" sortBy="#{aluno.tipo}">
+							<h:outputText value="#{aluno.tipo}" />
+						</p:column>
+
+						<p:column headerText="#{msg.Course}">
+							<ui:repeat value="#{aluno.cursos}" var="curso">
+								<h:outputText value="#{curso.descricao }" />
+								<br />
+							</ui:repeat>
+						</p:column>
+						<!-- ================================================= -->
+					</p:dataTable>
+
+					<!-- DIALOG DIALOG DIALOG DIALOG DIALOG DIALOG DIALOG DIALOG DIALOG DIALOG-->
+
+					<p:dialog id="alunoDialog" header="#{msg.dialogNewStudent}"
+						widgetVar="alunoDialogWidgetVar" modal="true" resizable="false"
+						closeOnEscape="true">
+						<p:defaultCommand target="salvarCommandButton" scope="alunoDialog" />
+						<p:messages id="alunoMessages"></p:messages>
+						<h:panelGrid id="alunoPanelGrid" columns="2"
+							rendered="#{gestaoAlunosBean.aluno ne null}">
+							<p:outputLabel for="nome" value="#{msg.Name}: " />
+							<p:inputText id="nome" size="80" maxlength="80"
+								value="#{gestaoAlunosBean.aluno.nome}" />
+
+							<p:outputLabel value="#{msg.Class}: " for="tipo" />
+							<p:selectOneMenu id="tipo" value="#{gestaoAlunosBean.aluno.tipo}">
+								<f:selectItem itemLabel="#{msg.Select}" />
+								<f:selectItems value="#{gestaoAlunosBean.tiposCurso}"
+									var="tipoCurso" itemLabel="#{tipoCurso.descricao}"
+									itemValue="#{tipoCurso}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{msg.EntryDate}:" for="dataEntrada" />
+							<p:calendar id="dataEntrada" pattern="dd/MM/yyyy" size="30"
+								value="#{gestaoAlunosBean.aluno.dataEntrada}" />
+
+							<p:outputLabel value="#{msg.Course}" for="cursos" />
+							<p:autoComplete id="cursos" size="80"
+								value="#{gestaoAlunosBean.aluno.cursos}"
+								completeMethod="#{gestaoAlunosBean.completarCurso}"
+								converter="#{gestaoAlunosBean.cursoConverter}" var="curso"
+								itemLabel="#{curso.descricao}" itemValue="#{curso}"
+								multiple="true" scrollHeight="250" dropdown="true"
+								showEmptyMessage="false" forceSelection="true"></p:autoComplete>
+
+							<h:outputLabel />
+							<p:commandButton id="salvarCommandButton" value="#{msg.Save}"
+								actionListener="#{gestaoAlunosBean.salvar}"
+								update="alunoPanelGrid alunoMessages"
+								oncomplete="if (!args.validationFailed) PF('alunoDialogWidgetVar').hide()"
+								process="alunoDialog" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+
+
+			</div>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+				
+			</script>
+		</h:body>
+	</f:view>
+</ui:composition>
