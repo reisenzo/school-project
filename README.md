@@ -30,7 +30,7 @@ O sistema desenvolvido visa a gestão escolar, oferecendo funcionalidades comple
 
 - **Funcionalidades Adicionais**
   - Adição, edição e exclusão de professores, cursos e alunos.
-  - Opções para exportar dados em PDF e outros formatos.
+  - Opções para baixar dados em PDF .
   - Funcionalidades de pesquisa avançada para uma melhor experiência do usuário.
 
 - **Relacionamentos**
