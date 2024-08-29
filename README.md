@@ -25,6 +25,8 @@ O sistema desenvolvido visa a gestão escolar, oferecendo funcionalidades comple
 
 - **Internacionalização**
   - Suporte para múltiplos idiomas, permitindo a personalização da interface conforme a preferência do usuário.
+  ![DialogLanguage](https://github.com/user-attachments/assets/95e6e626-2563-4da2-b0a0-ed56e4de79e2)
+
 
 - **Funcionalidades Adicionais**
   - Adição, edição e exclusão de professores, cursos e alunos.
