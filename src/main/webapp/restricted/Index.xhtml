@@ -21,6 +21,7 @@
 				<p:linkButton value="#{msg.homeButton}" outcome="Index"
 					Class="navButton" />
 					
+					
 				<p:linkButton value="#{msg.teacherButton}"
 					outcome="GestaoProfessores" Class="navButton"
 					rendered="#{sessionScope.tipoUsuario == 'professor' || sessionScope.tipoUsuario == 'admin'}" />
